@@ -3,6 +3,7 @@ classdef statoSistema < handle
     properties
         clock
         prossimoArrivo
+        %prossimoCompletamentoServizio
         interArrivalTime
         tempoArrivoCoda
         tempoTotaleAttesa
@@ -13,20 +14,27 @@ classdef statoSistema < handle
     methods
 
         % costuttore che inizializza la classe
-        function obj = statoSistema()
-            obj.clock = 0;
-            obj.interArrivalTime = 4;
-            obj.prossimoArrivo = exprnd(obj.interArrivalTime);
-            obj.tempoArrivoCoda = [];
-            obj.tempoTotaleAttesa = 0;
-            obj.maxClientiDaServire = 1000;
-            obj.numClientiServiti = 0;
+        function stato = statoSistema()
+            stato.clock = 0;
+            stato.interArrivalTime = 4;
+            stato.prossimoArrivo = exprnd(stato.interArrivalTime);
+            %stato.prossimoCompletamentoServizio = inf; % il primo evento deve per forza essere l'arrivo del cliente
+            stato.maxClientiDaServire = 1000;
+            stato.numClientiServiti = 0;
         end
 
         % aggiorno i valori
-        function obj = aggiornoProssimoArrivo(obj)
-            obj.prossimoArrivo = obj.clock + exprnd(obj.interArrivalTime);
+        function stato = aggiornoProssimoArrivo(obj, stato)
+            stato.prossimoArrivo = stato.clock + exprnd(stato.interArrivalTime);
         end
+
+    end
+
+    methods (Abstract)
+        % funzione controlla se ho ancora clienti da servire e mi dice qual
+        % è il primo evento che si verifica (tra completamento servizio e
+        % arrivo)
+        stato = prossimoEventoDaGestire(obj, stato)
 
     end
 end

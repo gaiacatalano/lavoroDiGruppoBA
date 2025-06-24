@@ -1,9 +1,11 @@
  classdef evento < handle
+
     % Classe astratta per gestire gli eventi
 
     methods (Abstract)
-        % Metodi astratti che verranno implementati nelle sottoclassi
-        prossimoEvento = generatoreEvento(obj, interarrivalTimeMedio)
-
+        stato = gestioneEvento(obj, stato)
+        %gestioneArrivo = gestioneArrivo(stato)
     end
+
+    
 end
