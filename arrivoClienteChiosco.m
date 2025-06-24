@@ -1,4 +1,4 @@
-classdef arrivoClienteChiosco < Evento
+classdef arrivoClienteChiosco < evento
     methods
 
         function prossimoEvento = generatoreEvento(obj, interarrivalTimeMedio, domanda)

@@ -1,4 +1,4 @@
- classdef Evento < handle
+ classdef evento < handle
     % Classe astratta per gestire gli eventi
 
     methods (Abstract)
