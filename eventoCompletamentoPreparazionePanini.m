@@ -1,4 +1,4 @@
-classdef eventoCompletamentoPreparazionePanini < evento
+classdef EventoCompletamentoPreparazionePanini < Evento
 
     methods
         function stato = gestioneEvento(obj, stato)

@@ -1,4 +1,4 @@
-classdef eventoArrivoClienteCassa < Evento
+classdef EventoArrivoClienteCassa < Evento
 
     methods
 

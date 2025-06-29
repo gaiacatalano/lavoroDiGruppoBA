@@ -1,4 +1,4 @@
-classdef statoSistemaChiosco < statoSistema
+classdef StatoSistemaChiosco < StatoSistema
 
     properties
         infTempoPreparazione

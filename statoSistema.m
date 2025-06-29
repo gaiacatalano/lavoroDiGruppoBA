@@ -1,4 +1,4 @@
-classdef statoSistema < handle
+classdef StatoSistema < handle
 
     properties
         clock
@@ -14,7 +14,7 @@ classdef statoSistema < handle
     methods
 
         % costuttore che inizializza la classe
-        function stato = statoSistema()
+        function stato = StatoSistema()
             stato.clock = 0;
             stato.interArrivalTime = 4;
             stato.prossimoArrivo = exprnd(stato.interArrivalTime);

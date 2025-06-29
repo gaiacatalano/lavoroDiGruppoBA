@@ -1,4 +1,7 @@
 % testSimulazione.m
+clear
+close all
+clc
 
 % Inizializza lo stato
 stato = statoSistemaChiosco();
