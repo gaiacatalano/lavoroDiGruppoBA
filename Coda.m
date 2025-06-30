@@ -1,49 +1,52 @@
-classdef Coda < handle
+classdef Coda < handle   % Coda con capacità massima e disciplina FIFO
     properties
-        lunghezzaCoda
-        lunghezzaMassimaCoda
-        numClientiPersi
-        numClientiServiti
-        clientiCoda 
-        codaPiena 
+        clienti
+        lunghezza
+        lunghezzaMassima
+        numeroClientiServiti
+        numeroClientiPersi  
     end
 
     methods
-        function obj = Coda(lunghezzaMassimaCoda)
-            obj.lunghezzaMassimaCoda = lunghezzaMassimaCoda;
-            obj.lunghezzaCoda = 0;
-            obj.numClientiServiti = 0;
-            obj.numClientiPersi = 0;
-            obj.clientiCoda = Cliente.empty;
-            obj.codaPiena = false;
+        function obj = Coda(lunghezzaMassima)
+            obj.clienti = Cliente.empty;
+            obj.lunghezza = 0;
+            obj.lunghezzaMassima = lunghezzaMassima;
+            obj.numeroClientiServiti = 0;
+            obj.numeroClientiPersi = 0;
         end
 
-        function AggiungoInCoda(obj, cliente)
-            if obj.lunghezzaCoda < obj.lunghezzaMassimaCoda
-                obj.clientiCoda(end + 1) = cliente;
-                obj.lunghezzaCoda = obj.lunghezzaCoda + 1;
+        function aggiungi(obj, cliente)
+            if obj.lunghezza < obj.lunghezzaMassima
+                obj.clienti(end+1) = cliente;    
+                obj.lunghezza = obj.lunghezza + 1;
             else
-                obj.codaPiena = true;
-                obj.numClientiPersi = obj.numClientiPersi + 1;
+                obj.numeroClientiPersi = obj.numeroClientiPersi + 1;
             end
         end
 
-        function cliente = RimuovoDallaCoda(obj)
-            if obj.lunghezzaCoda > 0
-                cliente = obj.clientiCoda(1);
-                obj.clientiCoda(1) = []; % Remove the first customer
-                obj.lunghezzaCoda = obj.lunghezzaCoda - 1;
-                obj.numClientiServiti = obj.numClientiServiti + 1;
+        function cliente = rimuovi(obj)
+            if ~isempty(obj.clienti)       % se la coda è non vuota, c'è almeno un cliente in coda
+                cliente = obj.clienti(1);
+                obj.clienti(1) = [];       % rimuove il primo cliente in coda
+                obj.numeroClientiServiti = obj.numeroClientiServiti + 1;
+                obj.lunghezza = obj.lunghezza - 1;
             else
                 cliente = Cliente.empty;
             end
         end
 
-        function cliente = InfoPrimoCoda(obj)
-            if obj.lunghezzaCoda > 0
-                cliente = obj.clientiCoda(1);
+        function cliente = primo(obj)    % restituisce il primo cliente senza rimuoverlo
+            if ~isempty(obj.clienti)
+                cliente = obj.clienti(1);
             else
                 cliente = Cliente.empty;
+            end
+        end
+
+        function decrementaDomanda(obj)  % riduco di 1 la domanda del primo cliente in coda
+            if ~isempty(obj.clienti)
+                obj.clienti(1).domanda = obj.clienti(1).domanda - 1;
             end
         end
     end

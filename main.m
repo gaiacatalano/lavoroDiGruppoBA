@@ -3,25 +3,11 @@ clear
 close all
 clc
 
-% Inizializza lo stato
-stato = statoSistemaChiosco();
+lunghezzaMassimaCoda = 100;
+tempoInterArrivo = 4; 
+tempoPrepMin = 1.5;     
+tempoPrepMax = 2;    
 
-% Stampa stato iniziale
-disp("STATO INIZIALE");
-disp(stato);
+simulazione = SimulazioneChiosco(lunghezzaMassimaCoda, tempoInterArrivo, tempoPrepMin, tempoPrepMax);
 
-% Simula un arrivo
-evento1 = eventoArrivoClienteChiosco();
-stato = evento1.gestioneEvento(stato);
-
-% Stampa stato finale
-disp("STATO INTERMEDIO");
-disp(stato);
-
-% Simula un completamento preparazione panino
-evento2 = eventoCompletamentoPreparazionePanini();
-stato = evento2.gestioneEvento(stato);
-
-% Stampa stato finale
-disp("STATO FINALE");
-disp(stato);
+simulazione.simula()
