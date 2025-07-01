@@ -5,7 +5,7 @@ classdef EventoArrivoClienteChiosco < Evento
             simulazione.eventoArrivo.generaProssimoEvento(simulazione.clock);
 
             domanda = unidrnd(simulazione.domandaMassima);
-            cliente = Cliente(simulazione.prossimoID, simulazione.clock, domanda);
+            cliente = ClienteChiosco(simulazione.prossimoID, simulazione.clock, domanda);
             simulazione.prossimoID = simulazione.prossimoID + 1;
 
             if ~isempty(simulazione.coda.clienti)    % se la coda non è vuota

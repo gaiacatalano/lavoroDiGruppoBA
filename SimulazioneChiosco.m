@@ -1,17 +1,18 @@
 classdef SimulazioneChiosco < handle      % classe che gestisce la simulazione del chiosco dei panini
     properties  
-        clock = 0
-        numeroMassimoPaniniBuffer = 6
-        paniniNelBuffer = 3
-        bufferPieno = false
-        domandaMassima = 3
-        tempoTotaleAttesa = 0
-        numeroClientiServiti = 0
-        numeroClientiDaServire = 1000
+        clock
+        numeroMassimoPaniniBuffer
+        paniniNelBuffer
+        bufferPieno
+        domandaMassima 
+        tempoTotaleAttesa 
+        numeroClientiServiti 
+        numeroClientiDaServire 
+        numeroClientiPersi
         coda
         eventoArrivo
         eventoPreparazione
-        prossimoID = 1
+        prossimoID
     end
 
     methods
@@ -19,6 +20,15 @@ classdef SimulazioneChiosco < handle      % classe che gestisce la simulazione d
             obj.coda = Coda(lunghezzaMassimaCoda);
             obj.eventoArrivo = GenerazioneEvento(tempoInterArrivo, @exprnd);
             obj.eventoPreparazione = GenerazioneEvento([tempoPrepMin, tempoPrepMax], @unifrnd);
+            obj.clock = 0;
+            obj.numeroMassimoPaniniBuffer = 6;
+            obj.paniniNelBuffer = 3;
+            obj.bufferPieno = false;
+            obj.tempoTotaleAttesa = 0;
+            obj.numeroClientiServiti = 0;
+            obj.numeroClientiDaServire = 1000;
+            obj.numeroClientiPersi = 0;
+            obj.prossimoID = 1;
         end
 
         function simula(obj)
