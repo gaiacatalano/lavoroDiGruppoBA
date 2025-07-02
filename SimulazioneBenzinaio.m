@@ -15,8 +15,8 @@ classdef SimulazioneBenzinaio < handle
         eventoRifornimento
         eventoPagamento
         prossimoID
-        pompeDestra
-        pompeSinistra
+        pompe
+        listaEventi
     end
 
     methods
@@ -36,8 +36,8 @@ classdef SimulazioneBenzinaio < handle
             obj.eventoRifornimento = GenerazioneEvento([tempoRifMin, tempoRifMax], @unifrnd);
             obj.eventoPagamento = GenerazioneEvento([tempoPagMin, tempoPagMax], @unifrnd);
             obj.prossimoID = 1;
-            obj.pompeDestra = Pompa(%%%%%%%%%);
-            obj.pompeSinistra = Pompa(%%%%%);
+            obj.pompe = [Pompa(1,"destra"), Pompa(2,"destra"), Pompa(3,"sinistra"), Pompa(4,"sinistra")];
+            obj.listaEventi = ListaEventi();
         end
 
         function simula(obj)
