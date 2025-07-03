@@ -8,7 +8,7 @@ classdef EventoCompletamentoPreparazionePanini < Evento
 
                 if simulazione.coda.primo().domanda == 0    % se la domanda residua del primo cliente in coda è nulla vuol dire che ho finito di servire il cliente
                     cliente = simulazione.coda.rimuovi();   % il cliente lascia la coda
-                    cliente.tempoInizioServizio = simulazione.clock;
+                    cliente.tempoFineServizio = simulazione.clock;
                     simulazione.numeroClientiServiti = simulazione.numeroClientiServiti + 1;
                     simulazione.tempoTotaleAttesa = simulazione.tempoTotaleAttesa + cliente.TempoAttesa();
                 end

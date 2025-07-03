@@ -17,6 +17,7 @@ classdef SimulazioneBenzinaio < handle
         prossimoID
         pompe
         listaEventi
+        cassa
     end
 
     methods
@@ -28,7 +29,7 @@ classdef SimulazioneBenzinaio < handle
             obj.tempoTotaleAttesaCassa = 0;
             obj.tempoTotale = 0;
             obj.numeroClientiServiti = 0;
-            obj.numeroClientiDaServire = 0;
+            obj.numeroClientiDaServire = 100;
             obj.numeroClientiPersi = 0;
             obj.codaRifornimento = Coda(lunghezzaMassimaCoda);
             obj.codaCassa = Coda(2*obj.numeroMassimoPompe);
@@ -38,21 +39,35 @@ classdef SimulazioneBenzinaio < handle
             obj.prossimoID = 1;
             obj.pompe = [Pompa(1,"destra"), Pompa(2,"destra"), Pompa(3,"sinistra"), Pompa(4,"sinistra")];
             obj.listaEventi = ListaEventi();
+            obj.cassa = Cassa();
         end
 
+        % function simula(obj)
+        %     while obj.numeroClientiServiti < obj.numeroClientiDaServire
+        %         if obj.eventoArrivo.prossimoEvento < min(obj.eventoRifornimento.prossimoEvento, obj.eventoPagamento.prossimoEvento)
+        %             evento = EventoArrivoClienteStazioneRifornimento(%%%%%);
+        %         elseif obj.eventoRifornimento.prossimoEvento  < min(obj.eventoArrivo.prossimoEvento, obj.eventoPagamento.prossimoEvento)
+        %             evento = EventoRifornimento(%%%%%);
+        %         else
+        %             evento = EventoPagamento(%%%%%);
+        %         end            
+        %     end
+        % end
+     
         function simula(obj)
-            while obj.numeroClientiServiti < obj.numeroClientiDaServire
-                if obj.eventoArrivo.prossimoEvento < min(obj.eventoRifornimento.prossimoEvento, obj.eventoPagamento.prossimoEvento)
-                    evento = EventoArrivoClienteStazioneRifornimento(%%%%%);
-                elseif obj.eventoRifornimento.prossimoEvento  < min(obj.eventoArrivo.prossimoEvento, obj.eventoPagamento.prossimoEvento)
-                    evento = EventoRifornimento(%%%%%);
-                else
-                    evento = EventoPagamento(%%%%%);
-                end            
-            end
+
+        while obj.numeroClientiServiti < obj.numeroClientiDaServire %&& ~obj.listaEventi.isVuota()
+            evento = obj.listaEventi.estrai();
+            obj = evento.gestioneEvento(obj);
+            obj.numeroClientiServiti = obj.codaCassa.clientiServiti;
+            fprintf("Clienti serviti: %d\n", obj.numeroClientiServiti);
         end
+        
+        fprintf("Clienti serviti: %d\n", obj.numeroClientiServiti);
+
+        end
+
 
     end
 
-        % stampe varie
 end

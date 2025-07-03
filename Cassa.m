@@ -19,5 +19,7 @@ classdef Cassa < handle
         function libera(obj)
             obj.occupata = false;
         end
+
+        
     end
 end

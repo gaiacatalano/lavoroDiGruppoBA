@@ -13,7 +13,7 @@ classdef EventoArrivoClienteChiosco < Evento
             else    % se la coda è vuota, appena arriva un cliente lo servo
                 if simulazione.paniniNelBuffer >= cliente.domanda    % riesco a soddisfare subito la domanda
                     simulazione.paniniNelBuffer = simulazione.paniniNelBuffer - cliente.domanda;
-                    cliente.tempoInizioServizio = simulazione.clock;
+                    cliente.tempoFineServizio = simulazione.clock;
                     simulazione.numeroClientiServiti = simulazione.numeroClientiServiti + 1;
                     simulazione.tempoTotaleAttesa = simulazione.tempoTotaleAttesa + cliente.TempoAttesa();
                 else   % non ci sono abbastanza panini pronti

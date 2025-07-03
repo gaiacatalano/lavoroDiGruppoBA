@@ -4,8 +4,10 @@ classdef Autista < Cliente
         tempoInizioRifornimento
         tempoFineRifornimento
         tempoInizioPagamento 
+        tempoFinePagamento
         tempoUscita 
         bocchettaDestra % bool
+        aspettaUscita % bool che mi dice se il cliente sta aspettando dopo aver pagato
     end
 
     methods
@@ -16,6 +18,7 @@ classdef Autista < Cliente
             obj.tempoFineRifornimento = NaN;
             obj.tempoInizioPagamento = NaN; 
             obj.tempoUscita = NaN;
+            obj.aspettaUscita = false;
         end
 
         function attesaRifornimento = TempoAttesaRifornimento(obj)
@@ -43,6 +46,11 @@ classdef Autista < Cliente
                 attesaComplessiva = obj.tempoUscita - obj.tempoArrivo;
             end
         end
+
+        function inAttesa(obj)
+            obj.aspettaUscita = true; % Set the waiting status to true
+        end
+
 
     end
 

@@ -7,7 +7,7 @@ classdef ListaEventi < handle
     
     methods
         function obj = ListaEventi()
-            obj.eventi = Evento.empty;
+            obj.eventi = {};
         end
         
         function aggiungi(obj, nuovoEvento)
@@ -18,9 +18,9 @@ classdef ListaEventi < handle
                 tempi = [obj.eventi.tempo];
                 pos = find(tempi > nuovoEvento.tempo, 1); % primo evento con tempo maggiore
                 if isempty(pos)
-                    obj.eventi(end+1) = nuovoEvento;
+                    obj.eventi{end+1} = nuovoEvento;
                 else
-                    obj.eventi = [obj.eventi(1:pos-1), nuovoEvento, obj.eventi(pos:end)];
+                    obj.eventi = [obj.eventi{1:pos-1}, nuovoEvento, obj.eventi{pos:end}];
                 end
             end
         end
@@ -30,7 +30,7 @@ classdef ListaEventi < handle
             if isempty(obj.eventi)
                 error('ListaEventi: lista vuota');
             end
-            evento = obj.eventi(1);
+            evento = obj.eventi{1};
             obj.eventi(1) = [];  % rimuove dalla lista
         end
         
@@ -42,7 +42,7 @@ classdef ListaEventi < handle
             % per debug
             fprintf('Lista eventi attuale:\n');
             for k = 1:length(obj.eventi)
-                fprintf('Evento tipo %s a tempo %.2f\n', class(obj.eventi(k)), obj.eventi(k).tempo);
+                fprintf('Evento tipo %s a tempo %.2f\n', class(obj.eventi{k}), obj.eventi{k}.tempo);
             end
         end
     end
