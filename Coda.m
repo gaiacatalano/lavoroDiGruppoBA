@@ -16,6 +16,10 @@ classdef Coda < handle   % Coda con capacità massima e disciplina FIFO
             obj.numeroClientiPersi = 0;
         end
 
+        % function flagCodaVuota = codaVuota(obj)
+        %     flagCodaVuota = (obj.lunghezza == 0);
+        % end
+
         function aggiungi(obj, cliente)
             if obj.lunghezza < obj.lunghezzaMassima
                 obj.clienti{end+1} = cliente;    
@@ -27,7 +31,7 @@ classdef Coda < handle   % Coda con capacità massima e disciplina FIFO
         end
 
         function cliente = rimuovi(obj)
-            if ~isempty(obj.clienti)       % se la coda è non vuota, c'è almeno un cliente in coda
+            if  ~isempty(obj.clienti)       % se la coda è non vuota, c'è almeno un cliente in coda
                 cliente = obj.clienti{1};
                 obj.clienti(1) = [];       % rimuove il primo cliente in coda
                 obj.numeroClientiServiti = obj.numeroClientiServiti + 1;

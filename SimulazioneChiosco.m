@@ -24,6 +24,7 @@ classdef SimulazioneChiosco < handle      % classe che gestisce la simulazione d
             obj.numeroMassimoPaniniBuffer = 6;
             obj.paniniNelBuffer = 3;
             obj.bufferPieno = false;
+            obj.domandaMassima = 3;
             obj.tempoTotaleAttesa = 0;
             obj.numeroClientiServiti = 0;
             obj.numeroClientiDaServire = 1000;

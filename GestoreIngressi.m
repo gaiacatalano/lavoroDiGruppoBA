@@ -22,10 +22,12 @@ classdef GestoreIngressi < handle
                 tempoFineRifornimento = simulazione.eventoRifornimento.prossimoEvento;
                 if simulazione.pompe(prima).pompaLibera() %se anche la prima è libera mi posiziono nella prima
                     simulazione.pompe(prima).assegnaCliente(autista,tempoFineRifornimento);
-                    simulazione.listaEventi.aggiungi(EventoRifornimento(tempoFineRifornimento,prima, autista));
+                    autista.assegnaPompa(simulazione.pompe(prima));
+                    simulazione.listaEventi.aggiungi(EventoRifornimento(tempoFineRifornimento, autista));
                 else %altrimenti mi posiziono nella seconda
                     simulazione.pompe(seconda).assegnaCliente(autista,tempoFineRifornimento);
-                    simulazione.listaEventi.aggiungi(EventoRifornimento(tempoFineRifornimento,seconda, autista));
+                    autista.assegnaPompa(simulazione.pompe(seconda));
+                    simulazione.listaEventi.aggiungi(EventoRifornimento(tempoFineRifornimento, autista));
                 end
             end
         end

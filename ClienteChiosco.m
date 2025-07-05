@@ -14,7 +14,7 @@ classdef ClienteChiosco < Cliente
         end
 
         function attesa = TempoAttesa(obj)
-            if isnan(obj.tempoInizioServizio)
+            if isnan(obj.tempoFineServizio)
                 attesa = NaN;
             else
                 attesa = obj.tempoFineServizio - obj.tempoArrivo;

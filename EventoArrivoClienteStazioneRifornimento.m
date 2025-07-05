@@ -35,7 +35,7 @@ classdef EventoArrivoClienteStazioneRifornimento < Evento
                 %         simulazione.pompe(seconda).assegnaCliente(autista,tempoFineRifornimento);
                 %         simulazione.listaEventi.aggiungi(EventoRifornimento(tempoFineRifornimento,seconda, autista));
                 %     end
-                    assegnato = gestoreIngressi.gestisciIngressiDaCoda(simulazione, autista);
+                    assegnato = GestoreIngressi.gestisciIngressiDaCoda(simulazione, autista);
                
                     
                 if ~assegnato %se non ci sono pompe compatibili disponibili mi metto in coda

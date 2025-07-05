@@ -56,14 +56,17 @@ classdef SimulazioneBenzinaio < handle
      
         function simula(obj)
 
-        while obj.numeroClientiServiti < obj.numeroClientiDaServire %&& ~obj.listaEventi.isVuota()
-            evento = obj.listaEventi.estrai();
-            obj = evento.gestioneEvento(obj);
-            obj.numeroClientiServiti = obj.codaCassa.clientiServiti;
+            primoEvento = EventoArrivoClienteStazioneRifornimento(obj.eventoArrivo.prossimoEvento);
+            obj.listaEventi.aggiungi(primoEvento);
+            while obj.numeroClientiServiti < obj.numeroClientiDaServire && ~obj.listaEventi.listaVuota()
+                evento = obj.listaEventi.estrai();
+                obj = evento.gestioneEvento(obj);
+                fprintf("ciao  %d\n", length(obj.listaEventi));
+                obj.numeroClientiServiti = obj.codaCassa.numeroClientiServiti;
+                %fprintf("Clienti serviti: %d\n", obj.numeroClientiServiti);
+            end
+            
             fprintf("Clienti serviti: %d\n", obj.numeroClientiServiti);
-        end
-        
-        fprintf("Clienti serviti: %d\n", obj.numeroClientiServiti);
 
         end
 

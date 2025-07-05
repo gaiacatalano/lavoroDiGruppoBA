@@ -1,22 +1,20 @@
 classdef EventoPagamento < Evento
 
     properties
-        idPompa
         autista
     end
 
     methods
 
-        function obj= EventoPagamento(tempoFinePagamento, idPompa, autista)
+        function obj= EventoPagamento(tempoFinePagamento, autista)
                 obj@Evento(tempoFinePagamento);
-                obj.idPompa = idPompa;
                 obj.autista = autista;
         end
         
         function  simulazione = gestioneEvento(obj, simulazione)
             simulazione.clock = obj.tempo;
 
-            pompa = obj.idPompa;
+            pompa = simulazione.pompe(obj.autista.idPompaAssegnata);
             obj.autista.tempoFinePagamento = simulazione.clock;
 
             % aggiorno codaCassa
@@ -28,7 +26,7 @@ classdef EventoPagamento < Evento
                prossimoCliente.tempoInizioPagamento = simulazione.clock;
                simulazione.eventoPagamento.generaProssimoEvento(simulazione.clock);
                tempoFinePagamento = simulazione.eventoPagamento.prossimoEvento;
-               simulazione.listaEventi.aggiungi(EventoPagamento(tempoFinePagamento, prossimoCliente.idPompa));
+               simulazione.listaEventi.aggiungi(EventoPagamento(tempoFinePagamento, prossimoCliente));
            end
 
            if obj.autista.bocchettaDestra % controllo il lato della bocchetta = lato pompa
@@ -41,8 +39,8 @@ classdef EventoPagamento < Evento
 
             % se il cliente che ha pagato era nella prima pompa
             % se ne puo' andare
-            if obj.idPompa == prima
-                obj.autista.tempoUscita = simulazione.clocl;
+            if pompa == prima
+                obj.autista.tempoUscita = simulazione.clock;
                 pompa.libera();  
                 % controllo che non ci sia un cliente nella pompa dietro
                 % che aspetta
@@ -55,7 +53,7 @@ classdef EventoPagamento < Evento
             else 
                 % se la pompa davanti è libera, se ne va
                 if simulazione.pompe(prima).pompaLibera()
-                    obj.autista.tempoUscita = simulazione.clocl;
+                    obj.autista.tempoUscita = simulazione.clock;
                     pompa.libera(); 
                 else % sennò deve aspettare che liberi la pompa quello davanti
                     obj.autista.inAttesa();
@@ -63,9 +61,9 @@ classdef EventoPagamento < Evento
             end
             
             assegnato = true;
-            while assegnato
-                prossimoAutista = simulazione.codaRifornimento.clienti(1);
-                assegnato = gestoreIngressi.gestisciIngressiDaCoda(simulazione, prossimoAutista);
+            while assegnato && ~isempty(simulazione.codaRifornimento.clienti)
+                prossimoAutista = simulazione.codaRifornimento.clienti{1};
+                assegnato = GestoreIngressi.gestisciIngressiDaCoda(simulazione, prossimoAutista);
                 if assegnato
                     simulazione.codaRifornimento.rimuovi();
                 end

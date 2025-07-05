@@ -1,14 +1,12 @@
 classdef EventoRifornimento < Evento
 
     properties
-        idPompa
         autista
     end
 
     methods
-        function obj= EventoRifornimento(tempoFineRifornimento, idPompa, autista)
+        function obj= EventoRifornimento(tempoFineRifornimento, autista)
             obj@Evento(tempoFineRifornimento);
-            obj.idPompa = idPompa;
             obj.autista = autista;
         end
 
@@ -24,11 +22,11 @@ classdef EventoRifornimento < Evento
                 simulazione.codaCassa.aggiungi(obj.autista);  % cliente arriva e si mette in coda
             else %se la coda è vuota
                 if simulazione.cassa.cassaLibera() %se la cassa è libera pago immediatamente
-                    simulazione.Cassa.occupa();
+                    simulazione.cassa.occupa();
                     obj.autista.tempoInizioPagamento = simulazione.clock;
                     simulazione.eventoPagamento.generaProssimoEvento(simulazione.clock);
                     tempoFinePagamento = simulazione.eventoPagamento.prossimoEvento;
-                    simulazione.listaEventi.aggiungi(EventoPagamento(tempoFinePagamento, obj.idPompa, obj.autista));
+                    simulazione.listaEventi.aggiungi(EventoPagamento(tempoFinePagamento, obj.autista));
                 else
                     simulazione.codaCassa.aggiungi(obj.autista); 
                 end

@@ -11,15 +11,14 @@ tempoPrepMax = 2;
 
 % benzinaio
 lunghezzaMassimaCodaBenzinaio = 10;
-tempoRifMin = 5;
-tempoRifMax = 7;
+tempoInterArrivoBenzina = 4; 
+tempoRifMin = 2;
+tempoRifMax = 3;
 tempoPagMin = 1;
 tempoPagMax = 2;
 
 % simulazioneChiosco = SimulazioneChiosco(lunghezzaMassimaCodaChiosco, tempoInterArrivo, tempoPrepMin, tempoPrepMax);
-% 
 % simulazioneChiosco.simula()
 
-simulazioneBenzinaio = SimulazioneBenzinaio(lunghezzaMassimaCodaBenzinaio, tempoInterArrivo, tempoRifMin, tempoRifMax, tempoPagMin, tempoPagMax);
-
+simulazioneBenzinaio = SimulazioneBenzinaio(lunghezzaMassimaCodaBenzinaio, tempoInterArrivoBenzina, tempoRifMin, tempoRifMax, tempoPagMin, tempoPagMax);
 simulazioneBenzinaio.simula()
