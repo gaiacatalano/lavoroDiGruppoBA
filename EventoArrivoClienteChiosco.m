@@ -14,7 +14,7 @@ classdef EventoArrivoClienteChiosco < Evento
                 if simulazione.paniniNelBuffer >= cliente.domanda    % riesco a soddisfare subito la domanda
                     simulazione.paniniNelBuffer = simulazione.paniniNelBuffer - cliente.domanda;
                     cliente.tempoFineServizio = simulazione.clock;
-                    simulazione.numeroClientiServiti = simulazione.numeroClientiServiti + 1;
+                    simulazione.aggiornaClientiServiti();
                     simulazione.tempoTotaleAttesa = simulazione.tempoTotaleAttesa + cliente.TempoAttesa();
                 else   % non ci sono abbastanza panini pronti
                     cliente.domanda = cliente.domanda - simulazione.paniniNelBuffer;

@@ -22,14 +22,14 @@ classdef SimulazioneBenzinaio < handle
 
     methods
         
-        function obj = SimulazioneBenzinaio(lunghezzaMassimaCoda, tempoInterArrivo, tempoRifMin, tempoRifMax, tempoPagMin, tempoPagMax)
+        function obj = SimulazioneBenzinaio(lunghezzaMassimaCoda, numeroMaxClientiBenzinaio, tempoInterArrivo, tempoRifMin, tempoRifMax, tempoPagMin, tempoPagMax)
             obj.clock = 0;
             obj.numeroMassimoPompe = 2; % ho 4 pompe, ma 2 per parte
             obj.tempoTotaleAttesaRifornimento = 0;
             obj.tempoTotaleAttesaCassa = 0;
             obj.tempoTotale = 0;
             obj.numeroClientiServiti = 0;
-            obj.numeroClientiDaServire = 100;
+            obj.numeroClientiDaServire = numeroMaxClientiBenzinaio;
             obj.numeroClientiPersi = 0;
             obj.codaRifornimento = Coda(lunghezzaMassimaCoda);
             obj.codaCassa = Coda(2*obj.numeroMassimoPompe);
@@ -55,22 +55,25 @@ classdef SimulazioneBenzinaio < handle
         % end
      
         function simula(obj)
-
+            fprintf("Benzinaio \n");
             primoEvento = EventoArrivoClienteStazioneRifornimento(obj.eventoArrivo.prossimoEvento);
             obj.listaEventi.aggiungi(primoEvento);
             while obj.numeroClientiServiti < obj.numeroClientiDaServire && ~obj.listaEventi.listaVuota()
                 evento = obj.listaEventi.estrai();
                 obj = evento.gestioneEvento(obj);
-                fprintf("ciao  %d\n", length(obj.listaEventi));
-                obj.numeroClientiServiti = obj.codaCassa.numeroClientiServiti;
+                %fprintf("Lungh. listaEventi in simula  %d\n", length(obj.listaEventi.eventi));
                 %fprintf("Clienti serviti: %d\n", obj.numeroClientiServiti);
             end
-            
+            obj.numeroClientiPersi = obj.codaRifornimento.numeroClientiPersi;
             fprintf("Clienti serviti: %d\n", obj.numeroClientiServiti);
+            fprintf("Clienti persi: %d\n", obj.numeroClientiPersi);
 
         end
 
-
+        function aggiornaClientiServiti(obj)
+            obj.numeroClientiServiti = obj.numeroClientiServiti + 1;
+            %fprintf("Clienti serviti: %d\n", obj.numeroClientiServiti);
+        end
     end
 
 end

@@ -19,6 +19,7 @@ classdef EventoPagamento < Evento
 
             % aggiorno codaCassa
             simulazione.cassa.libera();
+            simulazione.aggiornaClientiServiti();
 
            if ~isempty(simulazione.codaCassa.clienti) 
                prossimoCliente = simulazione.codaCassa.rimuovi();
@@ -39,12 +40,13 @@ classdef EventoPagamento < Evento
 
             % se il cliente che ha pagato era nella prima pompa
             % se ne puo' andare
-            if pompa == prima
+            if pompa.id == prima
                 obj.autista.tempoUscita = simulazione.clock;
                 pompa.libera();  
                 % controllo che non ci sia un cliente nella pompa dietro
                 % che aspetta
-                if simulazione.pompe(seconda).cliente.aspettaUscita
+                
+                if ~isempty(simulazione.pompe(seconda).cliente) && simulazione.pompe(seconda).cliente.aspettaUscita
                     simulazione.pompe(seconda).cliente.tempoUscita = simulazione.clock();
                     simulazione.pompe(seconda).libera();
                 end       

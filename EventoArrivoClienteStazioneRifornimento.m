@@ -13,8 +13,12 @@ classdef EventoArrivoClienteStazioneRifornimento < Evento
             simulazione.prossimoID = simulazione.prossimoID + 1;
 
              if ~isempty(simulazione.codaRifornimento.clienti)    % se la coda non è vuota
-                simulazione.codaRifornimento.aggiungi(autista);  % cliente arriva e si mette in coda
-             else % se la coda è vuota controllo se c'è un posto libero compatibile
+                 simulazione.codaRifornimento.aggiungi(autista);  % cliente arriva e si mette in coda
+             else 
+                 assegnato = GestoreIngressi.gestisciIngressiDaCoda(simulazione, autista);
+                 if ~assegnato %se non ci sono pompe compatibili disponibili mi metto in coda
+                    simulazione.codaRifornimento.aggiungi(autista);
+                 % se la coda è vuota controllo se c'è un posto libero compatibile
 
                 % if autista.bocchettaDestra %assegno gli id delle due pompe
                 %     prima = 1;
@@ -35,11 +39,9 @@ classdef EventoArrivoClienteStazioneRifornimento < Evento
                 %         simulazione.pompe(seconda).assegnaCliente(autista,tempoFineRifornimento);
                 %         simulazione.listaEventi.aggiungi(EventoRifornimento(tempoFineRifornimento,seconda, autista));
                 %     end
-                    assegnato = GestoreIngressi.gestisciIngressiDaCoda(simulazione, autista);
-               
                     
-                if ~assegnato %se non ci sono pompe compatibili disponibili mi metto in coda
-                    simulazione.codaRifornimento.aggiungi(autista);
+                    
+                
             
                 end
              end

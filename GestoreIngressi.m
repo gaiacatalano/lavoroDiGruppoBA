@@ -5,7 +5,7 @@ classdef GestoreIngressi < handle
 
         function assegnato = gestisciIngressiDaCoda(simulazione, autista)
 
-            assegnato = false;
+            
 
            if autista.bocchettaDestra
                 prima = 1;
@@ -29,7 +29,12 @@ classdef GestoreIngressi < handle
                     autista.assegnaPompa(simulazione.pompe(seconda));
                     simulazione.listaEventi.aggiungi(EventoRifornimento(tempoFineRifornimento, autista));
                 end
+            else
+                assegnato = false;
             end
+            %fprintf("Stato pompe: prima=%d libera=%d seconda=%d libera=%d\n", ...
+        %prima, simulazione.pompe(prima).pompaLibera(), ...
+        %seconda, simulazione.pompe(seconda).pompaLibera());
         end
         
 

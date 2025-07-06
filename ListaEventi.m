@@ -13,7 +13,7 @@ classdef ListaEventi < handle
         function aggiungi(obj, nuovoEvento)
             % Inserisce l'evento in ordine crescente di tempo
             if isempty(obj.eventi)
-                obj.eventi = {nuovoEvento};
+                obj.eventi{1} = nuovoEvento;
             else
                 tempi = cellfun(@(e) e.tempo, obj.eventi);
                 pos = find(tempi >= nuovoEvento.tempo, 1); % primo evento con tempo maggiore
@@ -23,8 +23,8 @@ classdef ListaEventi < handle
                     obj.eventi = [obj.eventi(1:pos-1), {nuovoEvento}, obj.eventi(pos:end)];
                 end
             end
-            fprintf("tempo aggiunta: %.2f\n", nuovoEvento.tempo)
-            fprintf("L'evento è di classe: %s\n", class(nuovoEvento));
+            %fprintf("tempo aggiunta: %.2f\n", nuovoEvento.tempo)
+            %fprintf("L'evento è di classe: %s\n", class(nuovoEvento));
         end
 
         
@@ -34,8 +34,8 @@ classdef ListaEventi < handle
                 error('ListaEventi: lista vuota');
             end
             evento = obj.eventi{1};
-            fprintf("tempo estrazione: %.2f\n", evento.tempo)
-            fprintf("L'evento di estrazione è di classe: %s\n", class(evento));
+            %fprintf("tempo estrazione: %.2f\n", evento.tempo)
+            %fprintf("L'evento di estrazione è di classe: %s\n", class(evento));
             obj.eventi(1) = [];  % rimuove dalla lista
 
         end
