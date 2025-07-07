@@ -1,4 +1,4 @@
-classdef SimulazioneChiosco < handle      % classe che gestisce la simulazione del chiosco dei panini
+classdef SimulazioneChiosco < handle 
     properties  
         clock
         numeroMassimoPaniniBuffer
@@ -12,7 +12,7 @@ classdef SimulazioneChiosco < handle      % classe che gestisce la simulazione d
         coda
         eventoArrivo
         eventoPreparazione
-        prossimoID
+        prossimoID %  contatore per assegnare un id al cliente
     end
 
     methods
@@ -32,12 +32,17 @@ classdef SimulazioneChiosco < handle      % classe che gestisce la simulazione d
             obj.prossimoID = 1;
         end
 
+        % funzione che simula il funzionamento del chiosco di panini
         function simula(obj)
-            fprintf("Chiosco \n");
+
+            % finché ci sono ancora clienti da servire
             while obj.numeroClientiServiti < obj.numeroClientiDaServire
-                if obj.eventoPreparazione.prossimoEvento <= obj.eventoArrivo.prossimoEvento   % il primo evento che si verifica è il completamento del panino
+
+                % Se si verifica prima il completamento del panino,
+                % creo l'evento EventoCompletamentoPreparazionePanini
+                if obj.eventoPreparazione.prossimoEvento <= obj.eventoArrivo.prossimoEvento   
                     evento = EventoCompletamentoPreparazionePanini(obj.eventoPreparazione.prossimoEvento);
-                else    % il primo evento che si verifica è l'arrivo di un cliente
+                else    % altrimenti creo l'evento EventoArrivoClienteChiosco
                     evento = EventoArrivoClienteChiosco(obj.eventoArrivo.prossimoEvento);
                 end
                 obj = evento.gestioneEvento(obj);

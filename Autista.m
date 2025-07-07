@@ -5,13 +5,15 @@ classdef Autista < Cliente
         tempoFineRifornimento
         tempoInizioPagamento 
         tempoFinePagamento
-        tempoUscita 
-        bocchettaDestra % bool
-        aspettaUscita % bool che mi dice se il cliente sta aspettando dopo aver pagato
+        tempoUscita % tempo uscita totale dalla stazione di servizio
+        bocchettaDestra % bool = 1 se lato bocchetta è destro
+        aspettaUscita % bool = 1 se cliente ha pagato e aspetta di poter uscire
         idPompaAssegnata
+        idCassaAssegnata
     end
 
     methods
+
         function obj = Autista(id, tempoArrivo, bocchettaDestra)
             obj@Cliente(id,tempoArrivo)
             obj.bocchettaDestra = bocchettaDestra;
@@ -21,6 +23,7 @@ classdef Autista < Cliente
             obj.tempoUscita = NaN;
             obj.aspettaUscita = false;
             obj.idPompaAssegnata = NaN;
+            obj.idCassaAssegnata = NaN;
         end
 
         function attesaRifornimento = TempoAttesaRifornimento(obj)
@@ -50,13 +53,16 @@ classdef Autista < Cliente
         end
 
         function inAttesa(obj)
-            obj.aspettaUscita = true; % Set the waiting status to true
+            obj.aspettaUscita = true;
         end
 
         function obj = assegnaPompa(obj, pompa)
             obj.idPompaAssegnata = pompa.id;
         end
 
+        function obj = assegnaCassa(obj, cassa)
+            obj.idCassaAssegnata = cassa.id;
+        end
 
     end
 

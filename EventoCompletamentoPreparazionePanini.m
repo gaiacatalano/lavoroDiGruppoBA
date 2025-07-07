@@ -1,6 +1,9 @@
 classdef EventoCompletamentoPreparazionePanini < Evento
+
     methods
+
         function simulazione = gestioneEvento(obj, simulazione)
+
             simulazione.clock = obj.tempo;
 
             if ~isempty(simulazione.coda.clienti)   % se la coda non è vuota
@@ -12,16 +15,18 @@ classdef EventoCompletamentoPreparazionePanini < Evento
                     simulazione.aggiornaClientiServiti();
                     simulazione.tempoTotaleAttesa = simulazione.tempoTotaleAttesa + cliente.TempoAttesa();
                 end
-            else  % se non ci sono clienti in coda metto il panino pronto nel buffer
+            else  % se non ci sono clienti in coda, metto il panino nel buffer
                 simulazione.paniniNelBuffer = simulazione.paniniNelBuffer + 1;
             end
 
-            if simulazione.paniniNelBuffer == simulazione.numeroMassimoPaniniBuffer   % è stata raggiunta la capacità massima del buffer
+            % se è stata raggiunta la capacità massima del buffer
+            if simulazione.paniniNelBuffer == simulazione.numeroMassimoPaniniBuffer   
                 simulazione.bufferPieno = true;
-                simulazione.eventoPreparazione.prossimoEvento = Inf;  % non si può produrre un nuovo panino se prima non viene prima servito un cliente
+                simulazione.eventoPreparazione.prossimoEvento = Inf;  % non si può produrre un nuovo panino, deve prima arrivare un cliente
             else
                 simulazione.eventoPreparazione.generaProssimoEvento(simulazione.clock);
             end
         end
+
     end
 end

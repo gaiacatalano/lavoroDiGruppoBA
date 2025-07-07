@@ -1,21 +1,26 @@
 classdef Cassa < handle
     properties
-        occupata   % true se la cassa è occupata
+        occupata   % bool = 1 se la cassa è occupata
+        id
     end
     
     methods
-        function obj = Cassa()
+        function obj = Cassa(id)
             obj.occupata = false;
+            obj.id = id;
         end
         
-        function occ = cassaLibera(obj)
-            occ = ~obj.occupata;
+        % funzione che controlla se la cassa è libera
+        function libera = cassaLibera(obj)
+            libera = ~obj.occupata;
         end
         
+        % funzione che imposta la cassa a occupata
         function occupa(obj)
             obj.occupata = true;
         end
         
+        % funzione che imposta la cassa a libera
         function libera(obj)
             obj.occupata = false;
         end

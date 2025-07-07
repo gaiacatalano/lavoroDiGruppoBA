@@ -1,6 +1,6 @@
 classdef Evento < handle
     properties
-        tempo            % momento in cui l'evento deve essere gestito
+        tempo % momento in cui l'evento deve essere gestito
     end
 
     methods
@@ -9,7 +9,6 @@ classdef Evento < handle
         end
     end
 
-    % metodo astratto per gestire gli eventi
     methods (Abstract)
         simulazione = gestioneEvento(obj, simulazione)
     end

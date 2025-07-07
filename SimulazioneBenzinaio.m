@@ -14,17 +14,27 @@ classdef SimulazioneBenzinaio < handle
         eventoArrivo
         eventoRifornimento
         eventoPagamento
-        prossimoID
-        pompe
-        listaEventi
-        cassa
+        prossimoID % contatore per assegnare un id all'autista
+        pompe % array di oggetti di tipo Pompa
+        listaEventi % lista contenente gli eventi da gestire
+        casse % cell array di oggetti di tipo Cassa
     end
 
     methods
         
-        function obj = SimulazioneBenzinaio(lunghezzaMassimaCoda, numeroMaxClientiBenzinaio, tempoInterArrivo, tempoRifMin, tempoRifMax, tempoPagMin, tempoPagMax)
+        function obj = SimulazioneBenzinaio(lunghezzaMassimaCoda, numeroMaxClientiBenzinaio, tempoInterArrivo, tempoRifMin, tempoRifMax, tempoPagMin, tempoPagMax, numeroCasse)
+
+            % distinzione tra caso con una sola cassa o con due casse
+            if nargin < 8
+                numeroCasse = 1; 
+            end
+            obj.casse = cell(1, numeroCasse);
+            for i = 1:numeroCasse
+                obj.casse{i} = Cassa(i); 
+            end
+
             obj.clock = 0;
-            obj.numeroMassimoPompe = 2; % ho 4 pompe, ma 2 per parte
+            obj.numeroMassimoPompe = 2; % ci sono 4 pompe, ma 2 per lato
             obj.tempoTotaleAttesaRifornimento = 0;
             obj.tempoTotaleAttesaCassa = 0;
             obj.tempoTotale = 0;
@@ -38,41 +48,35 @@ classdef SimulazioneBenzinaio < handle
             obj.eventoPagamento = GenerazioneEvento([tempoPagMin, tempoPagMax], @unifrnd);
             obj.prossimoID = 1;
             obj.pompe = [Pompa(1,"destra"), Pompa(2,"destra"), Pompa(3,"sinistra"), Pompa(4,"sinistra")];
-            obj.listaEventi = ListaEventi();
-            obj.cassa = Cassa();
+            obj.listaEventi = ListaEventi();            
+            
         end
-
-        % function simula(obj)
-        %     while obj.numeroClientiServiti < obj.numeroClientiDaServire
-        %         if obj.eventoArrivo.prossimoEvento < min(obj.eventoRifornimento.prossimoEvento, obj.eventoPagamento.prossimoEvento)
-        %             evento = EventoArrivoClienteStazioneRifornimento(%%%%%);
-        %         elseif obj.eventoRifornimento.prossimoEvento  < min(obj.eventoArrivo.prossimoEvento, obj.eventoPagamento.prossimoEvento)
-        %             evento = EventoRifornimento(%%%%%);
-        %         else
-        %             evento = EventoPagamento(%%%%%);
-        %         end            
-        %     end
-        % end
      
+        % funzione che simula il funzionamento del benzinaio
         function simula(obj)
-            fprintf("Benzinaio \n");
+
+            % genero il primo evento possibile che è un arrivo di un cliente
             primoEvento = EventoArrivoClienteStazioneRifornimento(obj.eventoArrivo.prossimoEvento);
             obj.listaEventi.aggiungi(primoEvento);
+
+            % finché ci sono ancora clienti da servire e ho eventi da gestire
             while obj.numeroClientiServiti < obj.numeroClientiDaServire && ~obj.listaEventi.listaVuota()
+
+                % estraggo il primo evento
                 evento = obj.listaEventi.estrai();
+
+                % gestisco l'evento
                 obj = evento.gestioneEvento(obj);
-                %fprintf("Lungh. listaEventi in simula  %d\n", length(obj.listaEventi.eventi));
-                %fprintf("Clienti serviti: %d\n", obj.numeroClientiServiti);
             end
+            
             obj.numeroClientiPersi = obj.codaRifornimento.numeroClientiPersi;
             fprintf("Clienti serviti: %d\n", obj.numeroClientiServiti);
             fprintf("Clienti persi: %d\n", obj.numeroClientiPersi);
-
         end
 
+        % funzione che aggiorna il numero di clienti serviti
         function aggiornaClientiServiti(obj)
             obj.numeroClientiServiti = obj.numeroClientiServiti + 1;
-            %fprintf("Clienti serviti: %d\n", obj.numeroClientiServiti);
         end
     end
 

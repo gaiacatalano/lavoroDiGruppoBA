@@ -1,47 +1,44 @@
-classdef Coda < handle   % Coda con capacità massima e disciplina FIFO
+classdef Coda < handle   
+
     properties
-        clienti
-        lunghezza
+        clienti % lista di clienti nella coda
+        lunghezza % lunghezza attuale coda
         lunghezzaMassima
-        numeroClientiServiti
         numeroClientiPersi  
     end
 
     methods
+
         function obj = Coda(lunghezzaMassima)
             obj.clienti = {};
             obj.lunghezza = 0;
             obj.lunghezzaMassima = lunghezzaMassima;
-            obj.numeroClientiServiti = 0;
             obj.numeroClientiPersi = 0;
         end
 
-        % function flagCodaVuota = codaVuota(obj)
-        %     flagCodaVuota = (obj.lunghezza == 0);
-        % end
-
+        % funzione che aggiunte il cliente in coda
         function aggiungi(obj, cliente)
             if obj.lunghezza < obj.lunghezzaMassima
                 obj.clienti{end+1} = cliente;    
                 obj.lunghezza = obj.lunghezza + 1;
-                %fprintf('Cliente aggiunto. Lunghezza coda: %d\n', obj.lunghezza);
             else
                 obj.numeroClientiPersi = obj.numeroClientiPersi + 1;
             end
         end
 
+        % funzione che rimuove il cliente dalla coda
         function cliente = rimuovi(obj)
-            if  ~isempty(obj.clienti)       % se la coda è non vuota, c'è almeno un cliente in coda
+            if  ~isempty(obj.clienti)       
                 cliente = obj.clienti{1};
-                obj.clienti(1) = [];       % rimuove il primo cliente in coda
+                obj.clienti(1) = [];       
                 obj.lunghezza = obj.lunghezza - 1;
             else
                 cliente = [];
             end
         end
 
-        
-        function cliente = primo(obj)    % restituisce il primo cliente senza rimuoverlo
+        % funzione che restituisce il primo cliente senza rimuoverlo
+        function cliente = primo(obj)    
             if ~isempty(obj.clienti)
                 cliente = obj.clienti{1};
             else
@@ -49,10 +46,13 @@ classdef Coda < handle   % Coda con capacità massima e disciplina FIFO
             end
         end
 
-        function decrementaDomanda(obj)  % riduco di 1 la domanda del primo cliente in coda
+        % funzione che riduce di 1 la domanda del primo cliente in coda
+        function decrementaDomanda(obj)  
             if ~isempty(obj.clienti)
                 obj.clienti{1}.domanda = obj.clienti{1}.domanda - 1;
             end
         end
+
     end
+    
 end
