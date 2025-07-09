@@ -36,6 +36,7 @@ classdef EventoArrivoClienteChiosco < Evento
                     simulazione.eventoPreparazione.generaProssimoEvento(simulazione.clock); 
                 end
             end
+            simulazione.storicoCoda(end+1, :) = [simulazione.clock, simulazione.coda.lunghezza];
         end
 
     end

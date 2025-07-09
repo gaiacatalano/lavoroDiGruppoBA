@@ -13,6 +13,8 @@ classdef SimulazioneChiosco < handle
         eventoArrivo
         eventoPreparazione
         prossimoID %  contatore per assegnare un id al cliente
+        storicoCoda % matrice che registra ogni variazione [tempo, lunghezza]
+
     end
 
     methods
@@ -30,6 +32,7 @@ classdef SimulazioneChiosco < handle
             obj.numeroClientiDaServire = numeroMaxClientiChiosco;
             obj.numeroClientiPersi = 0;
             obj.prossimoID = 1;
+            obj.storicoCoda = [0, 0]; 
         end
 
         % funzione che simula il funzionamento del chiosco di panini
@@ -52,6 +55,9 @@ classdef SimulazioneChiosco < handle
             fprintf("Clienti serviti: %d\n", obj.numeroClientiServiti);
             fprintf("Clienti persi: %d\n", obj.numeroClientiPersi);
             fprintf("Tempo medio d'attesa: %.2f minuti\n", tempoMedioAttesa);
+
+            statistiche = Statistiche(obj);
+            statistiche.stampaStatistiche();
         end
 
         function aggiornaClientiServiti(obj)

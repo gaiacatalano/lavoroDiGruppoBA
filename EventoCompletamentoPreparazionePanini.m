@@ -26,6 +26,7 @@ classdef EventoCompletamentoPreparazionePanini < Evento
             else
                 simulazione.eventoPreparazione.generaProssimoEvento(simulazione.clock);
             end
+            simulazione.storicoCoda(end+1, :) = [simulazione.clock, simulazione.coda.lunghezza];
         end
 
     end
