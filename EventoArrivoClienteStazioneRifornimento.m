@@ -18,11 +18,12 @@ classdef EventoArrivoClienteStazioneRifornimento < Evento
 
              if ~isempty(simulazione.codaRifornimento.clienti)    % se la coda non è vuota
                  simulazione.codaRifornimento.aggiungi(autista);  % cliente arriva e si mette in coda
+                 simulazione.storicoCodaRifornimento(end+1, :) = [simulazione.clock, simulazione.codaRifornimento.lunghezza];
              else 
                  assegnato = GestoreStazione.gestisciIngressiRifornimento(simulazione, autista);
                  if ~assegnato % se non ci sono pompe compatibili disponibili, si mette in coda
                     simulazione.codaRifornimento.aggiungi(autista);                
-               
+                    simulazione.storicoCodaRifornimento(end+1, :) = [simulazione.clock, simulazione.codaRifornimento.lunghezza];
                 end
              end
 

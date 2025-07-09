@@ -16,8 +16,10 @@ classdef SimulazioneBenzinaio < handle
         eventoPagamento
         prossimoID % contatore per assegnare un id all'autista
         pompe % array di oggetti di tipo Pompa
-        listaEventi % lista contenente gli eventi da gestire
         casse % cell array di oggetti di tipo Cassa
+        listaEventi % lista contenente gli eventi da gestire
+        storicoCodaRifornimento
+        storicoCodaCassa
     end
 
     methods
@@ -48,7 +50,9 @@ classdef SimulazioneBenzinaio < handle
             obj.eventoPagamento = GenerazioneEvento([tempoPagMin, tempoPagMax], @unifrnd);
             obj.prossimoID = 1;
             obj.pompe = [Pompa(1,"destra"), Pompa(2,"destra"), Pompa(3,"sinistra"), Pompa(4,"sinistra")];
-            obj.listaEventi = ListaEventi();            
+            obj.listaEventi = ListaEventi();  
+            obj.storicoCodaRifornimento = [0, 0];
+            obj.storicoCodaCassa = [0, 0];
             
         end
      
@@ -72,11 +76,26 @@ classdef SimulazioneBenzinaio < handle
             obj.numeroClientiPersi = obj.codaRifornimento.numeroClientiPersi;
             fprintf("Clienti serviti: %d\n", obj.numeroClientiServiti);
             fprintf("Clienti persi: %d\n", obj.numeroClientiPersi);
+        
+            statistiche = Statistiche(obj);
+            statistiche.stampaStatistiche(obj);
         end
 
         % funzione che aggiorna il numero di clienti serviti
         function aggiornaClientiServiti(obj)
             obj.numeroClientiServiti = obj.numeroClientiServiti + 1;
+        end
+        
+        function aggiornaTotaleAttesaRifornimento(obj,attesa)
+            obj.tempoTotaleAttesaRifornimento = obj.tempoTotaleAttesaRifornimento + attesa;
+        end
+
+        function aggiornaTotaleAttesaCassa(obj,attesa)
+            obj.tempoTotaleAttesaCassa = obj.tempoTotaleAttesaCassa + attesa;
+        end
+
+        function aggiornaTotaleSistema(obj,attesa)
+            obj.tempoTotale = obj.tempoTotale + attesa;
         end
     end
 

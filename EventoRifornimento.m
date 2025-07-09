@@ -22,6 +22,7 @@ classdef EventoRifornimento < Evento
             % se la coda in cassa non è vuota
             if ~isempty(simulazione.codaCassa.clienti)   
                 simulazione.codaCassa.aggiungi(obj.autista);  % si mette in coda
+                simulazione.storicoCodaCassa(end+1, :) = [simulazione.clock, simulazione.codaCassa.lunghezza];
             else % se la coda è vuota, gestisco l'ingresso in cassa
                 GestoreStazione.gestisciIngressiCasse(simulazione, obj.autista);
             end

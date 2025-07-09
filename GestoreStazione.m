@@ -18,6 +18,7 @@ classdef GestoreStazione < handle
             if simulazione.pompe(seconda).pompaLibera() 
 
                 autista.tempoInizioRifornimento = simulazione.clock;
+                simulazione.aggiornaTotaleAttesaRifornimento(autista.TempoAttesaRifornimento());
                 assegnato = true;
                 simulazione.eventoRifornimento.generaProssimoEvento(simulazione.clock);
                 tempoFineRifornimento = simulazione.eventoRifornimento.prossimoEvento;
@@ -53,6 +54,7 @@ classdef GestoreStazione < handle
                     % l'autista puo' occuparla e pagare
                     cassa.occupa();
                     autista.tempoInizioPagamento = simulazione.clock;
+                    simulazione.aggiornaTotaleAttesaCassa(autista.TempoAttesaCassa());
                     autista.assegnaCassa(cassa);
                     simulazione.eventoPagamento.generaProssimoEvento(simulazione.clock);
                     tempoFinePagamento = simulazione.eventoPagamento.prossimoEvento;
@@ -67,6 +69,7 @@ classdef GestoreStazione < handle
             % in coda
             if ~assegnata
                 simulazione.codaCassa.aggiungi(autista);
+                simulazione.storicoCodaCassa(end+1, :) = [simulazione.clock, simulazione.codaCassa.lunghezza];
             end
 
         end

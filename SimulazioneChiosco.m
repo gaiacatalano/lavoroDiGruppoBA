@@ -53,7 +53,7 @@ classdef SimulazioneChiosco < handle
             obj.numeroClientiPersi = obj.coda.numeroClientiPersi;
 
             statistiche = Statistiche(obj);
-            statistiche.stampaStatistiche();
+            statistiche.stampaStatistiche(obj);
         end
 
         function aggiornaClientiServiti(obj)

@@ -16,7 +16,8 @@ classdef EventoArrivoClienteChiosco < Evento
 
             % se la coda non è vuota, cliente arriva e si mette in coda
             if ~isempty(simulazione.coda.clienti)    
-                simulazione.coda.aggiungi(cliente);  
+                simulazione.coda.aggiungi(cliente);
+                simulazione.storicoCoda(end+1, :) = [simulazione.clock, simulazione.coda.lunghezza];
             else    % se la coda è vuota, appena arriva un cliente lo servo
                 if simulazione.paniniNelBuffer >= cliente.domanda    % se riesco a soddisfare subito la domanda
                     simulazione.paniniNelBuffer = simulazione.paniniNelBuffer - cliente.domanda;
@@ -27,6 +28,7 @@ classdef EventoArrivoClienteChiosco < Evento
                     cliente.domanda = cliente.domanda - simulazione.paniniNelBuffer;
                     simulazione.paniniNelBuffer = 0;
                     simulazione.coda.aggiungi(cliente);
+                    simulazione.storicoCoda(end+1, :) = [simulazione.clock, simulazione.coda.lunghezza];
                 end
 
                 % se il buffer era pieno, adesso non lo sarà più perché ho
@@ -36,7 +38,7 @@ classdef EventoArrivoClienteChiosco < Evento
                     simulazione.eventoPreparazione.generaProssimoEvento(simulazione.clock); 
                 end
             end
-            simulazione.storicoCoda(end+1, :) = [simulazione.clock, simulazione.coda.lunghezza];
+            
         end
 
     end

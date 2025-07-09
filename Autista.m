@@ -45,7 +45,7 @@ classdef Autista < Cliente
         end
 
         function attesaComplessiva = TempoAttesa(obj)
-            if isnan(obj.tempoInizioServizio)
+            if isnan(obj.tempoUscita)
                 attesaComplessiva = NaN;
             else
                 attesaComplessiva = obj.tempoUscita - obj.tempoArrivo;
