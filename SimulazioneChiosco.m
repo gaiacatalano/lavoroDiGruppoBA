@@ -51,10 +51,6 @@ classdef SimulazioneChiosco < handle
                 obj = evento.gestioneEvento(obj);
             end
             obj.numeroClientiPersi = obj.coda.numeroClientiPersi;
-            tempoMedioAttesa = obj.tempoTotaleAttesa / obj.numeroClientiServiti;
-            fprintf("Clienti serviti: %d\n", obj.numeroClientiServiti);
-            fprintf("Clienti persi: %d\n", obj.numeroClientiPersi);
-            fprintf("Tempo medio d'attesa: %.2f minuti\n", tempoMedioAttesa);
 
             statistiche = Statistiche(obj);
             statistiche.stampaStatistiche();
@@ -62,7 +58,6 @@ classdef SimulazioneChiosco < handle
 
         function aggiornaClientiServiti(obj)
             obj.numeroClientiServiti = obj.numeroClientiServiti + 1;
-            %fprintf("Clienti serviti: %d\n", obj.numeroClientiServiti);
         end
         
     end

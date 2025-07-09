@@ -4,11 +4,7 @@ classdef Statistiche < handle
         numeroClientiServiti
         numeroClientiPersi
         tempoMedioAttesaCoda
-        tempoMedioAttesaCassa
-        tempoMedioSistema
-        tempoMedioInattivitaPompa
         lunghezzaMediaCoda
-        lunghezzaMediaCodaCassa
     end
 
     methods
@@ -16,30 +12,12 @@ classdef Statistiche < handle
             obj.numeroClientiServiti = simulazione.numeroClientiServiti;
             obj.numeroClientiPersi = simulazione.numeroClientiPersi;
             obj.tempoMedioAttesaCoda = obj.calcolaTempoMedioAttesaCoda(simulazione);
-            obj.tempoMedioAttesaCassa = obj.calcolaTempoMedioAttesaCodaCassa(simulazione);
-            obj.tempoMedioSistema = obj.calcolaTempoMedioSistema(simulazione);
-            obj.tempoMedioInattivitaPompa = obj.calcolatempoMedioInattivitaPompa(simulazione);
             obj.lunghezzaMediaCoda = obj.calcolaLunghezzaMedia(simulazione);
-            obj.lunghezzaMediaCodaCassa = obj.lunghezzaMediaCodaCassa(simulazione);
         end
 
-  
-        function attesaMedia = calcolaTempoMedioAttesaCoda(~, sim)
+        function attesaMedia = calcolaTempoMedioAttesaCoda(sim)
             attesaMedia = sim.tempoTotaleAttesa / sim.numeroClientiServiti;
         end
-    
-        function calcolaTempoMedioAttesaCodaCassa(~, sim)
-
-        end
-
-        function calcolaTempoMedioSistema(~, sim)
-
-        end
-
-        function calcolatempoMedioInattivitaPompa(~, sim)
-
-        end
-
 
         function lunghezzaMedia = calcolaLunghezzaMedia(~, sim)
             storico = sim.storicoCoda; 
@@ -58,16 +36,12 @@ classdef Statistiche < handle
             lunghezzaMedia = areaTotale / tempoFinale;
         end
 
-        function calcololunghezzaMediaCodaCassa(~, sim)
-
-        end
-
         function stampaStatistiche(obj)
             fprintf("Statistiche della simulazione:\n");
-            fprintf("• Clienti serviti: %d\n", obj.numeroClientiServiti);
-            fprintf("• Clienti persi: %d\n", obj.numeroClientiPersi);
-            fprintf("• Tempo medio di attesa in coda: %.2f minuti\n", obj.tempoMedioAttesaCoda);
-            fprintf("• Lunghezza media della coda: %.2f\n", obj.lunghezzaMediaCoda);
+            fprintf("- Clienti serviti: %d\n", obj.numeroClientiServiti);
+            fprintf("- Clienti persi: %d\n", obj.numeroClientiPersi);
+            fprintf("- Tempo medio di attesa in coda: %.2f minuti\n", obj.tempoMedioAttesaCoda);
+            fprintf("- Lunghezza media della coda: %.2f\n", obj.lunghezzaMediaCoda);
         end
 
     end

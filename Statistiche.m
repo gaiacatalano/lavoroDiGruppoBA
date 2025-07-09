@@ -5,7 +5,6 @@ classdef Statistiche < handle
         numeroClientiPersi
         tempoMedioAttesaCoda
         lunghezzaMediaCoda
-
     end
 
     methods
@@ -39,10 +38,10 @@ classdef Statistiche < handle
 
         function stampaStatistiche(obj)
             fprintf("Statistiche della simulazione:\n");
-            fprintf("• Clienti serviti: %d\n", obj.numeroClientiServiti);
-            fprintf("• Clienti persi: %d\n", obj.numeroClientiPersi);
-            fprintf("• Tempo medio di attesa in coda: %.2f minuti\n", obj.tempoMedioAttesaCoda);
-            fprintf("• Lunghezza media della coda: %.2f\n", obj.lunghezzaMediaCoda);
+            fprintf("- Clienti serviti: %d\n", obj.numeroClientiServiti);
+            fprintf("- Clienti persi: %d\n", obj.numeroClientiPersi);
+            fprintf("- Tempo medio di attesa in coda: %.2f minuti\n", obj.tempoMedioAttesaCoda);
+            fprintf("- Lunghezza media della coda: %.2f\n", obj.lunghezzaMediaCoda);
         end
 
     end
