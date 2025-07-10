@@ -7,9 +7,8 @@ classdef Statistiche < handle
             attesaMedia = tempoTotaleAttesa / numeroClientiServiti;
         end
         
-        %calcolo la percentuale di 
-        % (frazione di tempo di inattività sul tempo totale)/(frazione di clienti che hanno utilizzato la pompa rispetto al totale di quelli che hanno fatto rifornimento)
-        function tempoMedio=  calcolaTempoMedioInattivita(pompa) 
+        
+        function tempoMedio = calcolaTempoMedioInattivita(pompa) 
             tempoMedio =  pompa.tempoTotaleInattivita/pompa.numClienti;
         end
 
@@ -33,7 +32,7 @@ classdef Statistiche < handle
             lunghezzaCoda = storico(:,2);
             figure;
             hold on;
-            stairs(tempo, lunghezzaCoda, 'LineWidth', 1, 'Color', 'b');
+            stairs(tempo, lunghezzaCoda, 'LineWidth', 1, 'Color', 'b'); 
             plot(tempo, lunghezzaCoda, 'bo', 'MarkerFaceColor', 'b');
             xlabel('Tempo');
             ylabel('Lunghezza della coda');
