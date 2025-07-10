@@ -47,7 +47,9 @@ classdef Statistiche < handle
             fprintf("Statistiche: \n");
             if isprop(sim, 'pompe')
                 fprintf("- Tempo durata simulazione: %.2f minuti \n", sim.clock);
-                fprintf("- Clienti persi: %d \n\n", sim.numeroClientiPersi);
+                fprintf("- Clienti serviti e usciti dal sistema: %d\n", sim.numeroClientiUsciti);
+                fprintf("- Clienti persi: %d \n", sim.numeroClientiPersi);
+                fprintf("- Tempo medio di permanenza nel sistema: %.2f minuti\n\n", Statistiche.calcolaTempoMedioAttesaCoda(sim.tempoTotale, sim.numeroClientiUsciti));
 
                 fprintf("- Clienti che hanno fatto rifornimento: %d\n", sim.numeroClientiServitiRifornimento);
                 fprintf("- Tempo medio di attesa in coda per il rifornimento: %.2f minuti\n", Statistiche.calcolaTempoMedioAttesaCoda(sim.tempoTotaleAttesaRifornimento, sim.numeroClientiServitiRifornimento));
@@ -58,8 +60,6 @@ classdef Statistiche < handle
                 fprintf("- Tempo medio di attesa in coda per il pagamento: %.2f minuti\n", Statistiche.calcolaTempoMedioAttesaCoda(sim.tempoTotaleAttesaCassa, sim.numeroClientiServitiCassa));
                 fprintf("- Lunghezza media della coda per il pagamento: %.2f\n\n", Statistiche.calcolaLunghezzaMedia(sim, sim.storicoCodaCassa));
                 
-                fprintf("- Clienti serviti e usciti dal sistema: %d\n", sim.numeroClientiUsciti);
-                fprintf("- Tempo medio di permanenza nel sistema: %.2f minuti\n\n", Statistiche.calcolaTempoMedioAttesaCoda(sim.tempoTotale, sim.numeroClientiUsciti));
                 
                 fprintf("Statistiche delle pompe di rifornimento: \n"); 
                 for i = 1:4
