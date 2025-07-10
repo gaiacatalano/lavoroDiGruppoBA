@@ -14,7 +14,7 @@ classdef EventoCompletamentoPreparazionePanini < Evento
                     simulazione.storicoCoda(end+1, :) = [simulazione.clock, simulazione.coda.lunghezza];
                     cliente.tempoFineServizio = simulazione.clock;
                     simulazione.aggiornaClientiServiti();
-                    simulazione.tempoTotaleAttesa = simulazione.tempoTotaleAttesa + cliente.TempoAttesa();
+                    simulazione.aggiornaTotaleAttesa(cliente.TempoAttesa());
                 end
             else  % se non ci sono clienti in coda, metto il panino nel buffer
                 simulazione.paniniNelBuffer = simulazione.paniniNelBuffer + 1;

@@ -15,6 +15,7 @@ classdef EventoRifornimento < Evento
             simulazione.clock = obj.tempo;
             
             obj.autista.tempoFineRifornimento = simulazione.clock;
+            simulazione.aggiornaClientiServitiRifornimento();
 
             % il cliente finisce il rifornimento, ma non libera ancora la
             % pompa, deve prima pagare

@@ -24,6 +24,7 @@ classdef EventoArrivoClienteChiosco < Evento
                     cliente.tempoFineServizio = simulazione.clock;
                     simulazione.aggiornaClientiServiti();
                     simulazione.tempoTotaleAttesa = simulazione.tempoTotaleAttesa + cliente.TempoAttesa();
+                    simulazione.aggiornaTotaleAttesa(cliente.TempoAttesa());
                 else   % se non ci sono abbastanza panini pronti
                     cliente.domanda = cliente.domanda - simulazione.paniniNelBuffer;
                     simulazione.paniniNelBuffer = 0;

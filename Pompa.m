@@ -6,6 +6,8 @@ classdef Pompa < handle
         cliente
         lato
         tempoRifornimento
+        numClienti
+        tempoTotaleInattivita
     end
 
     methods
@@ -15,6 +17,8 @@ classdef Pompa < handle
             obj.lato = lato;
             obj.cliente = [];
             obj.tempoRifornimento = NaN;
+            obj.numClienti = 0;
+            obj.tempoTotaleInattivita = 0;
         end
         
         % funzione che occupa la pompa, assegnandole un cliente
@@ -22,6 +26,7 @@ classdef Pompa < handle
             obj.occupata = true;
             obj.cliente = cliente;
             obj.tempoRifornimento = tempoRifornimento;
+            obj.numClienti = obj.numClienti + 1;
         end
         
         % funzione che controlla se la pompa è libera
@@ -33,6 +38,10 @@ classdef Pompa < handle
         function obj = libera(obj)
             obj.occupata = false;
             obj.cliente = [];
+        end
+
+        function aggiornaTempoTotaleInattivita(obj, autista)
+            obj.tempoTotaleInattivita = obj.tempoTotaleInattivita + (autista.tempoUscita - autista.tempoFineRifornimento);
         end
 
     end

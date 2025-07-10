@@ -6,7 +6,9 @@ classdef SimulazioneBenzinaio < handle
         tempoTotaleAttesaRifornimento
         tempoTotaleAttesaCassa
         tempoTotale
-        numeroClientiServiti
+        numeroClientiServitiRifornimento
+        numeroClientiServitiCassa
+        numeroClientiUsciti
         numeroClientiDaServire
         numeroClientiPersi
         codaRifornimento
@@ -40,7 +42,9 @@ classdef SimulazioneBenzinaio < handle
             obj.tempoTotaleAttesaRifornimento = 0;
             obj.tempoTotaleAttesaCassa = 0;
             obj.tempoTotale = 0;
-            obj.numeroClientiServiti = 0;
+            obj.numeroClientiServitiRifornimento = 0;
+            obj.numeroClientiServitiCassa = 0;
+            obj.numeroClientiUsciti = 0;
             obj.numeroClientiDaServire = numeroMaxClientiBenzinaio;
             obj.numeroClientiPersi = 0;
             obj.codaRifornimento = Coda(lunghezzaMassimaCoda);
@@ -64,7 +68,7 @@ classdef SimulazioneBenzinaio < handle
             obj.listaEventi.aggiungi(primoEvento);
 
             % finché ci sono ancora clienti da servire e ho eventi da gestire
-            while obj.numeroClientiServiti < obj.numeroClientiDaServire && ~obj.listaEventi.listaVuota()
+            while obj.numeroClientiUsciti < obj.numeroClientiDaServire && ~obj.listaEventi.listaVuota()
 
                 % estraggo il primo evento
                 evento = obj.listaEventi.estrai();
@@ -74,16 +78,21 @@ classdef SimulazioneBenzinaio < handle
             end
             
             obj.numeroClientiPersi = obj.codaRifornimento.numeroClientiPersi;
-            fprintf("Clienti serviti: %d\n", obj.numeroClientiServiti);
-            fprintf("Clienti persi: %d\n", obj.numeroClientiPersi);
-        
-            statistiche = Statistiche(obj);
-            statistiche.stampaStatistiche(obj);
+
+            Statistiche.stampaStatistiche(obj);
         end
 
         % funzione che aggiorna il numero di clienti serviti
-        function aggiornaClientiServiti(obj)
-            obj.numeroClientiServiti = obj.numeroClientiServiti + 1;
+        function aggiornaClientiServitiRifornimento(obj)
+            obj.numeroClientiServitiRifornimento = obj.numeroClientiServitiRifornimento + 1;
+        end
+
+        function aggiornaClientiServitiCassa(obj)
+            obj.numeroClientiServitiCassa = obj.numeroClientiServitiCassa + 1;
+        end
+
+        function aggiornaClientiUsciti(obj)
+            obj.numeroClientiUsciti = obj.numeroClientiUsciti + 1;
         end
         
         function aggiornaTotaleAttesaRifornimento(obj,attesa)
