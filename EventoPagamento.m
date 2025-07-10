@@ -56,6 +56,8 @@ classdef EventoPagamento < Evento
                 % e eventualmente lo faccio uscire dalla stazione       
                 if ~isempty(simulazione.pompe(seconda).cliente) && simulazione.pompe(seconda).cliente.aspettaUscita
                     simulazione.pompe(seconda).cliente.tempoUscita = simulazione.clock();
+                    simulazione.aggiornaTotaleSistema(simulazione.pompe(seconda).cliente.TempoAttesa());
+                    simulazione.pompe(seconda).aggiornaTempoTotaleInattivita(simulazione.pompe(seconda).cliente);
                     simulazione.pompe(seconda).libera();
                     simulazione.aggiornaClientiUsciti();
                 end       
